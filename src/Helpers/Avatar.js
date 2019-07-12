@@ -46,6 +46,7 @@ class Avatar extends React.Component {
     render() {
         return <div className='dropdown'>
                 <img className="user_navbar_avatar"
+                        alt=''
                         width='52px' 
                         height='53px' 
                         src='lol.png'

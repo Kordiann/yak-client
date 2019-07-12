@@ -5,6 +5,7 @@ import LoginPage from './LoginPage/LoginPage'
 import  RegisterPage  from './RegisterPage/RegisterPage'
 import { Switch, Route } from '../node_modules/react-router-dom'
 import MoviesList from './MoviesList/MoviesList';
+import MoviePage from './MoviePage/MoviePage';
 
 export const Main = () => (
       <Switch>
@@ -13,5 +14,6 @@ export const Main = () => (
         <Route exact path='/login' component={ LoginPage }/>
         <Route exact path='/register' component={ RegisterPage }/>
         <Route exact path='/movies' component={ MoviesList }/>
+        <Route exact path='/moviepage' component={ MoviePage }/>
       </Switch>
 )

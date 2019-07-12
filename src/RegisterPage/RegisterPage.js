@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { getSendingProps } from '../Helpers/getSendingProps';
 import validator from 'validator';
 
-import './registerform.css';
+import './registerpage.css';
 
 var URL_WITHOUT_PARAMS = "http://localhost:8080/user/add?";
 
+let header = new Headers({
+  'Access-Control-Allow-Origin':'*',
+  'Content-Type': 'multipart/form-data'
+});
+
+let sentData = {
+  method: 'POST',
+  header: header,
+  mode: 'cors',
+}
+
 function validate(login, email, password) {
   // True means invalid
-  
   let isEmail = validator.isEmail(email);
 
   return {
@@ -52,13 +61,11 @@ class RegisterPage extends Component {
   };
 
   handleSubmit = evt => {
-    if (!this.canBeSubmitted()) {
-      evt.preventDefault();
-      return;
-    }
     const { login, email, password } = this.state;
-
     this.postNewUser(login, email, password);
+    this.setState({
+      toRedirect:true,
+    });
   };
 
   canBeSubmitted() {
@@ -71,7 +78,7 @@ class RegisterPage extends Component {
   postNewUser = (login, email, password) => {
     var URL = `${URL_WITHOUT_PARAMS}${"userName="}${login}${"&password="}${password}${"&email="}${email}`;
 
-    fetch(URL, getSendingProps)
+    fetch(URL, sentData)
       .then(res => res.json())
       .then(json => {
         this.setState({

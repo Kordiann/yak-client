@@ -31,7 +31,7 @@ class HomePage extends Component {
               className={movie_card_container + this.state.opacity_v75}
               onMouseEnter={hideElement}
               onMouseLeave={showElement}>
-                <img src="a.jpg" />
+                <img src="a.jpg" alt='' />
                 <div id="sub_segment_1">
                 </div>
               </div>
@@ -39,7 +39,7 @@ class HomePage extends Component {
               className={movie_card_container + this.state.opacity_v75}
               onMouseEnter={hideElement} 
               onMouseLeave={showElement}>
-                <img src="aa.jpg" />
+                <img src="aa.jpg" alt='' />
                 <div id="sub_segment_2">
                 </div>
               </div>
@@ -47,7 +47,7 @@ class HomePage extends Component {
               className={movie_card_container + this.state.opacity_v75}
               onMouseEnter={hideElement} 
               onMouseLeave={showElement}>
-                <img src="aaa.jpg" />
+                <img src="aaa.jpg" alt='' />
                 <div id="sub_segment_3">
                 </div>
               </div>
@@ -55,7 +55,7 @@ class HomePage extends Component {
               className={movie_card_container + this.state.opacity_v75}
               onMouseEnter={hideElement} 
               onMouseLeave={showElement}>
-                <img src="aaaa.jpg" />
+                <img src="aaaa.jpg" alt='' />
                 <div id="sub_segment_4">
                 </div>
               </div>
@@ -74,7 +74,7 @@ class HomePage extends Component {
               <div className="posts_title opacity_v50">
                 <span>A new Naruto main</span>
               </div>
-              <img src="b.jpg" />
+              <img src="b.jpg" alt='' />
             </div>
           </div>
         </section>

@@ -4,7 +4,7 @@ import { login } from '../redux/reducer';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import './loginform.css';
+import './loginpage.css';
 
 class LoginPage extends Component {
 
@@ -24,7 +24,7 @@ class LoginPage extends Component {
     let {isLoginPending, isLoginSuccess, loginError} = this.props;
 
     if (this.props.isLoginSuccess) {
-        return <Redirect to="/" />
+      return <Redirect to="/" />
     }
 
     return (

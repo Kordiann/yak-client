@@ -1,0 +1,20 @@
+.movie {
+    min-height: 600px;
+
+    padding: 100px;
+    padding-bottom: 50px;
+    background-color: var(--dark-green);
+}
+
+.movie_card {
+    height: 600px;
+}
+
+.movie_card_img {
+    margin: 0 100px;
+    float: left;
+}
+
+.movie_card_element {
+    float: left;
+}

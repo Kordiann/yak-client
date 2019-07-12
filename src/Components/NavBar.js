@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteUser } from '../redux/reducer';
 import { connect } from 'react-redux';
-
+import { pushSearchPhrase } from '../redux/reducer';
 import './navbar.css';
 import Avatar from '../Helpers/Avatar';
 
 const mapStateToProps = state => {
   return {
     userName: state.userName,
+    phrase: state.phrase,
     isLogged: state.isLogged
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteUser: () => dispatch(deleteUser()),
+    pushSearchPhrase: (phrase) => dispatch(pushSearchPhrase(phrase)),
   };
 }
 
@@ -54,7 +54,7 @@ class NavBar extends Component {
   }
 
   componentDidUpdate() {
-    if(this.props.userName != undefined && this.state.isLogged == false) {
+    if(this.props.userName !== undefined && this.state.isLogged === false) {
       this.setState({
         isLogged: true,
       });
@@ -84,13 +84,7 @@ class NavBar extends Component {
   }
 
   storePhrase = (e) => {
-    this.setState({
-      phrase: e.target.value,
-    });
-  }
-
-  passPhrase = () => {
-
+    this.props.pushSearchPhrase(e.target.value);
   }
 
   makeSearch = (e) => {
@@ -143,7 +137,8 @@ class NavBar extends Component {
                               type="text" 
                               onChange={e => this.storePhrase(e)} 
                               placeholder="Search"></input>
-                      <i className="fas fa-search"></i>
+                      <Link to='/search'>
+                        <i className="fas fa-search"></i></Link>
                     </li>
                     <li className={
                             this.state.isFixed ?

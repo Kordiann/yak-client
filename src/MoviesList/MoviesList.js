@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getSendingProps } from '../Helpers/getSendingProps';
+import { getSendingProps } from '../Helpers/SendingProps';
 
 import './movieslist.css';
 

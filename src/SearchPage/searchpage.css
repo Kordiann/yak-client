@@ -1,0 +1,29 @@
+.App {
+    background-color: var(--dark-green);
+}
+
+.input-group {
+    margin: auto;
+    padding: 50px;
+    width: 50%;
+}
+
+#search {
+    margin: auto;
+    width: 80%;
+}
+
+.my-gallery-class {
+    list-style: none!important;
+    margin: 0!important;
+    padding-bottom: 50px;
+    padding-left: 100px;
+}
+
+.film {
+    margin: 0!important;
+}
+
+.noliststyle {
+    list-style: none!important;
+}

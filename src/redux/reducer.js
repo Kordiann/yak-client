@@ -1,5 +1,6 @@
-import { getSendingProps } from '../Helpers/getSendingProps';
+import { getSendingProps } from '../Helpers/SendingProps';
 
+const SET_SEARCH_PHRASE = 'SET_SEARCH_PHRASE';
 const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -14,13 +15,13 @@ export function login(login, password) {
     dispatch(setLoginPending(true));
     dispatch(setLoginSuccess(false));
     dispatch(setLoginError(null));
-    dispatch(setIsLogged(true));
     dispatch(setUserName(login));
 
     callLoginApi(login, password, id => {
       dispatch(setLoginPending(false));
       if (id !== null) {
         dispatch(setLoginSuccess(true));
+        dispatch(setIsLogged(true));
       } else {
         dispatch(setLoginError(new Error('Invalid login or password')));
       }
@@ -33,6 +34,19 @@ export function deleteUser() {
     dispatch(setUserName(null));
     dispatch(setUserId(null));
     dispatch(setIsLogged(false));
+  }
+}
+
+export function pushSearchPhrase(phrase) {
+  return dispatch => {
+    dispatch(setSearchPhrase(phrase))
+  }
+}
+
+function setSearchPhrase(phrase) {
+  return {
+    type: SET_SEARCH_PHRASE,
+    phrase
   }
 }
 
@@ -100,6 +114,7 @@ export default function reducer(state = {
   isLoginPending: false,
   loginError: null,
   userName: null,
+  phrase: null,
   isLogged: false,
 }, action) {
   switch (action.type) {
@@ -132,6 +147,11 @@ export default function reducer(state = {
       return Object.assign({}, state, {
         isLogged: action.isLogged
     });
+
+    case SET_SEARCH_PHRASE:
+      return Object.assign({}, state, {
+        phrase: action.phrase
+      })
 
     default:
       return state;
