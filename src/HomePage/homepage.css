@@ -1,0 +1,133 @@
+.homepage_container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.news {
+  width: 80%;
+  min-height: inherit;
+  margin: auto;
+}
+
+.news_container {
+  width: 100%;
+  height: 400px;
+  
+  padding: 75px 0;
+  text-align: center;
+  background-color: var(--dark-green);
+}
+
+.movie_card_container {
+  width: 350px;
+  height: 400px;
+
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+
+  display: inline-block;
+}
+
+.movie_card_container img {
+  width: inherit;
+  height: 400px;
+
+  cursor: pointer;
+}
+
+.movie_card_container div {
+  width: 248px;
+  height: 298px;
+
+  padding: 25px;
+  margin: 25px;
+
+  position: absolute;
+  border: 1px solid black;
+  
+  text-align: center;
+  
+  transform: translateY(-406px);
+  cursor: pointer;
+  transition: 100ms ease ease-in;
+  /* background-color: rgba(255, 255, 255, 0.7); */
+}
+
+.posts_content {
+  width: 80%;
+  height: 100%;
+  position: relative;
+
+  margin: auto;
+  background-color: var(--light-green);
+}
+
+.posts_nav {
+  width: 80%;
+  min-height: 80px;
+  max-height: 100px;
+  text-align: center;
+  margin: auto;
+
+  background-color: var(--light-green);
+  position: relative;
+  z-index: 0;
+}
+
+.posts_nav span {
+  width: 10%;
+  font-size: x-large;
+  line-height: 80px;
+  font-family: 'Nunito', cursive;
+
+  display: block;
+  text-align: center;
+  position: relative;
+  margin: auto;
+  transition: 200ms ease all;
+}
+
+.posts_container {
+  width: 100%;
+  height: 100%;
+  
+  padding: 25px 0;
+  text-align: center;
+  background-color: var(--dark-green);
+}
+
+.posts {
+  width: 90%;
+  height: 60%;
+  margin: 80px auto;
+}
+
+.posts img {
+  width: 100%;
+  cursor: pointer;
+  transition: all ease 200ms;
+}
+
+.posts img:hover {
+  opacity: 0.89;
+}
+
+.posts_title {
+  top: 0;
+  width: 70%;
+  height: 80px;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  background-color: var(--bg-white);
+  z-index: 1;
+}
+
+.posts_title span {
+  line-height: 80px;
+  font-size: x-large;
+  margin: auto;
+}

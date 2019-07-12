@@ -1,0 +1,23 @@
+.sorted_letters_container {
+    width: 100%;
+    font-size: 2.11em;
+    background-color: var(--light-green);
+
+    padding: 0;
+    margin: 0;
+}
+
+.sorted_letters {
+    width: 90%;
+    list-style: none;
+    text-align: center;
+
+    padding: 0;
+    margin: 0 100px;
+}
+
+.sorted_letters li {
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 8px;
+}

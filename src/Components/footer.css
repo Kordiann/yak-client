@@ -1,0 +1,40 @@
+.footer_container {
+    width: 100%;
+    height: 150px;
+
+    background-color: var(--dark-blue);
+}
+
+.footer_content {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.footer_content i {
+    top: 5px;
+    position: relative;
+    font-size: 30px;
+    color: var(--bg-white);
+    margin-left: 5px;
+    margin-right: 2px;
+}
+
+.footer_content span {
+    width: 50%;
+    line-height: 150px; 
+    color: var(--bg-white);
+    margin: auto;
+}
+
+.footer_content span a {
+    text-decoration: none;
+    cursor: pointer;
+    transition: 200ms all ease;
+    color: var(--bg-white);
+}
+
+.footer_content span a:hover {
+    opacity: 0.75;
+}

@@ -1,14 +1,136 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+#index {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+:root {
+    --dark-green: #379683;
+    --lighter-dark-green: #3ea892;
+    --darker-darks-green: #308272;
+
+    --light-green: #8EE4AF;
+    --dark-blue: #05386B;
+    --bg-white: #EDF5E1;
+
+    --error: #b71c1c;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  min-height: 100%;
+  font-family: 'Nunito', cursive;
+  color: var(--dark-blue);
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  float: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn {
+  padding: 10px 25px;
+  margin: 10px;
+
+  color: var(--bg-white);
+  background-color: var(--dark-green);
+
+  box-shadow: 0px 0px 2px -1px rgba(0,0,0,0.7);
+
+  border: none;
+  border: 1px var(--light-green) solid;
+  border-radius: 5px;
+
+  transition: all ease 200ms;
+}
+
+.btn:hover {
+  cursor: pointer;
+
+  background-color: var(--lighter-dark-green);
+  box-shadow: 0px 0px 4px -1px rgba(0,0,0,0.8);
+}
+
+.error {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+label {
+  font-family: 'Nunito', cursive;
+  font-size: x-large;
+}
+
+.container {
+  position: relative; 
+  display: flex;
+  text-align: center;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 69%;
+
+  background-color: var(--dark-green);
+}
+
+.card {
+  position: relative;
+
+  padding: 25px 10px !important;
+
+  margin: 40px auto !important;
+
+  min-height: 45%;
+  min-width: 20%;
+
+  border: 2px var(--bg-white) solid;
+  border-radius: 15px;
+
+  background-color: var(--light-green);
+  box-shadow: 0px 0px 16px -1px rgba(48, 130, 114, 1);
+
+  transition: all ease 400ms;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card:hover {
+  border: 2px var(--light-green) solid;
+}
+
+.content {
+  text-align: center;
+
+  padding-top: 10px;
+
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
+
+.form {
+  margin: auto;
+  padding: 0;
+}
+
+.login_form {
+  margin-top: 25px;
 }

@@ -1,0 +1,89 @@
+
+
+label {
+    font-size: xx-large;
+}
+
+.form-group {
+    width: 55%;
+    margin: auto;
+
+    position: relative;
+}
+
+.form-group label{
+    font-size: x-large;
+}
+
+.form-control {
+    margin: 20px 0;
+
+    width: 100%;
+    height: 30px;
+
+    padding-left: 8px;
+
+    border: none;
+    border: 1px var(--dark-green) solid;
+    border-radius: 5px;
+    
+    font-size: 17px;
+}
+
+.message div {
+    margin: 20px;
+    font-size: 20px;
+}
+
+.registration {
+    float: left;
+}
+
+.registration_content {
+    text-align: center;
+    padding: 25px 10px;
+
+
+    cursor: pointer;
+    margin: auto;
+
+    width: 90%;
+    height: 80px;
+
+    position: flex;
+
+    border: 2px var(--bg-white) solid;
+    border-radius: 15px;
+
+    background-color: var(--light-green);
+    box-shadow: 0px 0px 16px -1px rgba(48, 130, 114, 1);
+
+    transition: all ease 400ms;
+
+    transform: translateY(80px);
+}
+
+.registration_content span {
+    position: relative;
+    line-height: 70px;
+}
+
+.registration_content i {
+    font-size: 60px;
+    line-height: 70px;
+    text-decoration: none;
+    color: var(--darker-darks-green);
+}
+
+.registration_content label {
+    color: var(--darker-darks-green);
+    cursor: pointer;
+}
+
+.registration_content:hover {
+    border: 2px var(--light-green) solid;
+}
+
+.login {
+    max-height: 55%;
+}
