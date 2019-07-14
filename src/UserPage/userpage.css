@@ -1,0 +1,30 @@
+.user_settings_list {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+
+    padding: 0;
+
+    text-align: center;
+    list-style: none;
+}
+
+.user_settings_list li {
+    height: 53px;
+}
+
+.user_settings_avatar {
+    float: left;
+    padding: 0 10px;
+}
+
+.user_btn {
+    width: 140px;
+    height: 25px;
+
+    font-size: 18px;
+    padding: 2px;
+    
+    margin: 7.5px 15px;
+    float: left;
+}

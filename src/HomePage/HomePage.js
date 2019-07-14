@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setupMovieId } from '../redux/reducer';
+import { getSendingProps } from '../Helpers/SendingProps';
+import { Redirect } from 'react-router-dom';
+
 import  { showElement,
   hideElement,
   showTitle,
@@ -7,7 +11,22 @@ import  { showElement,
 
 import './homepage.css';
 
+const URL = 'http://localhost:8080/movies/main?count=4';
+
 const movie_card_container = 'movie_card_container ';
+
+const mapStateToProps = state => {
+  return {
+    userName: state.userName,
+    movieid: state.movieid
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setupMovieId: (movieid) => dispatch(setupMovieId(movieid)),
+  };
+}
 
 class HomePage extends Component {
   
@@ -17,48 +36,62 @@ class HomePage extends Component {
     this.state = {
       results: [],
       name: this.props.userName,
+
+      toRedirect: false,
     }
   }
 
+  componentDidMount() {
+    this.fetchSearchingData();
+  }
+
+  fetchSearchingData = (e) => {
+    fetch(URL, getSendingProps())
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          isLoaded: true,
+          results: json
+        });
+    });
+
+  }
+
+  saveMovieIdAndGo = (e) => {
+    this.props.setupMovieId(e.currentTarget.attributes.getNamedItem("data-ref").value);
+
+    this.setState({
+      toRedirect: true,
+    });
+  }
+
   render() {
+
+    if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
+
+    const newsResult = this.state.results.map((result, i) => { 
+      i++;
+      return (
+        <div id={"segment_" + i}
+              key={result.imdbID}
+              data-ref={result.imdbID}
+              className={movie_card_container + this.state.opacity_v75}
+              onMouseEnter={hideElement}
+              onMouseLeave={showElement}
+              onClick={e => this.saveMovieIdAndGo(e)}>
+          <img src={result.poster} alt='' />
+          <div id={"sub_segment_" + i}>
+          </div>
+        </div>
+        );
+    });
 
     return (
       <div id="homePage">
         <div className="homepage_container">
           <section className="news_container">
             <div className="news">
-              <div id="segment_1"
-              className={movie_card_container + this.state.opacity_v75}
-              onMouseEnter={hideElement}
-              onMouseLeave={showElement}>
-                <img src="a.jpg" alt='' />
-                <div id="sub_segment_1">
-                </div>
-              </div>
-              <div id="segment_2" 
-              className={movie_card_container + this.state.opacity_v75}
-              onMouseEnter={hideElement} 
-              onMouseLeave={showElement}>
-                <img src="aa.jpg" alt='' />
-                <div id="sub_segment_2">
-                </div>
-              </div>
-              <div id="segment_3" 
-              className={movie_card_container + this.state.opacity_v75}
-              onMouseEnter={hideElement} 
-              onMouseLeave={showElement}>
-                <img src="aaa.jpg" alt='' />
-                <div id="sub_segment_3">
-                </div>
-              </div>
-              <div id="segment_4" 
-              className={movie_card_container + this.state.opacity_v75}
-              onMouseEnter={hideElement} 
-              onMouseLeave={showElement}>
-                <img src="aaaa.jpg" alt='' />
-                <div id="sub_segment_4">
-                </div>
-              </div>
+              {newsResult}
             </div>
           </section>
 
@@ -84,10 +117,4 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    userName: state.userName,
-  };
-};
-
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

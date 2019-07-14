@@ -5,10 +5,13 @@ const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 const SET_USER_ID = 'SET_USER_ID';
-const SET_IS_LOGGED = 'SET_IS_LOGGED';
-const API_URL_FIRST_PART = 'http://localhost:8080/user/authorize?userName=' ;
-const API_URL_SECOND_PART = '&password=';
+
 const SET_USER_NAME = 'SET_USER_NAME';
+const SET_MOVIEID = 'SET_MOVIEID';
+
+const SET_IS_LOGGED = 'SET_IS_LOGGED';
+const API_URL_FIRST_PART = 'http://localhost:8080/users/authorize?userName=' ;
+const API_URL_SECOND_PART = '&password=';
 
 export function login(login, password) {
   return dispatch => {
@@ -40,6 +43,19 @@ export function deleteUser() {
 export function pushSearchPhrase(phrase) {
   return dispatch => {
     dispatch(setSearchPhrase(phrase))
+  }
+}
+
+export function setupMovieId(movieid) {
+  return dispatch => {
+    dispatch(setMovieId(movieid));
+  }
+}
+
+function setMovieId(movieid) {
+  return {
+    type: SET_MOVIEID,
+    movieid
   }
 }
 
@@ -114,8 +130,11 @@ export default function reducer(state = {
   isLoginPending: false,
   loginError: null,
   userName: null,
-  phrase: null,
   isLogged: false,
+
+  phrase: null,
+  movieid: null,
+
 }, action) {
   switch (action.type) {
     case SET_LOGIN_PENDING:
@@ -151,7 +170,12 @@ export default function reducer(state = {
     case SET_SEARCH_PHRASE:
       return Object.assign({}, state, {
         phrase: action.phrase
-      })
+    });
+
+    case SET_MOVIEID:
+      return Object.assign({}, state, {
+        movieid: action.movieid
+    });
 
     default:
       return state;

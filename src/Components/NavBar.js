@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { pushSearchPhrase } from '../redux/reducer';
 import './navbar.css';
-import Avatar from '../Helpers/Avatar';
+import Avatar from '../Components/Avatar';
 
 const mapStateToProps = state => {
   return {

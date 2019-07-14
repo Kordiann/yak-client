@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { deleteUser } from '../redux/reducer';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const mapStateToProps = state => {
     return {
@@ -21,6 +23,7 @@ class Avatar extends React.Component {
 
         this.state = {
             showMenu: false,
+            toRedirect: false,
         }
 
         this.showMenu = this.showMenu.bind(this);
@@ -44,6 +47,10 @@ class Avatar extends React.Component {
     }
 
     render() {
+        if(this.state.toRedirect) {
+            return <Redirect to='/homepage' push={false} />;
+        }
+
         return <div className='dropdown'>
                 <img className="user_navbar_avatar"
                         alt=''
@@ -53,6 +60,7 @@ class Avatar extends React.Component {
                         onClick={this.showMenu}/>
                     {this.state.showMenu ? 
                         (<div className="dropdown_content">
+                            <Link to='/userpage'><dir>Profile</dir></Link>
                             <dir onClick={this.logout}>Log out</dir>
                         </div>) 
                         : 
@@ -63,6 +71,9 @@ class Avatar extends React.Component {
     logout = () => {
         this.props.deleteUser();
         window.location.reload();
+        this.setState({
+            toRedirect: true,
+        });
     }
 } 
 

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import {Input ,Button} from 'reactstrap';
+import { Input ,Button } from 'reactstrap';
 import Masonry from 'react-masonry-component';
 import { connect } from 'react-redux';
 import { getSendingProps } from '../Helpers/SendingProps';
 
 import './searchpage.css';
 
-const API_URL_WITH_PARAM = 'http://localhost:8080/movie?title=';
-const API_URL_FOR_ALL_MOVIES = 'http://localhost:8080/movie/main?count=10';
-const API_ULR_TO_SAVE_MOVIE = 'http://localhost:8080/movie/save/movie?movieIMDBID=';
+const API_URL_WITH_PARAM = 'http://localhost:8080/movies?title=';
+const API_URL_FOR_ALL_MOVIES = 'http://localhost:8080/movies/main?count=10';
+const API_ULR_TO_SAVE_MOVIE = 'http://localhost:8080/movies/save/movie?movieIMDBID=';
 
 const masonryOptions = {
   transitionDuration: 0
@@ -40,7 +40,6 @@ class SearchPage extends Component {
     } else {
       this.fetchSearchingData(this.props.phrase);
     }
-    console.log(this.props.phrase);
   }
 
   fetchSearchingData = (e) => {
@@ -52,7 +51,7 @@ class SearchPage extends Component {
       URL = `${API_URL_WITH_PARAM}${e}`;
     }
 
-    fetch(URL, getSendingProps)
+    fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -83,7 +82,7 @@ class SearchPage extends Component {
   }
   
   render() {
-    const childElements = this.state.results.map((result) => { 
+    const searchResult = this.state.results.map((result) => { 
       return (
            <li key={result.imdbID}  className="image-element-class">
             <div className="card film">
@@ -129,7 +128,7 @@ class SearchPage extends Component {
                         disableImagesLoaded={false} 
                         updateOnEachImageLoad={false} 
                     >
-                      {childElements}
+                      {searchResult}
                     </Masonry>
                   </div>
               );

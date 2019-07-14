@@ -7,14 +7,33 @@
 }
 
 .movie_card {
-    height: 600px;
+    height: 300px;
+}
+
+.movie_card span {
+    font-size: 30px;
+    text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 30%;
+    margin: auto;
+    display: inline-block;
 }
 
 .movie_card_img {
     margin: 0 100px;
+    border-radius: 15px;
     float: left;
 }
 
 .movie_card_element {
     float: left;
+    max-width: 500px;
+    margin-top: 50px;
+}
+
+.movie_card_element li {
+    font-size: 20px;
+    list-style: none;
+    margin: 20px 0;
 }

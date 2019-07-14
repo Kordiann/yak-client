@@ -185,10 +185,16 @@ input[type=text] {
     line-height: 40px;
     
     cursor: pointer;
+    color: var(--bg-white);
 
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 0px;
+}
+
+.dropdown_content dir a {
+    text-decoration: none;
+    color: var(--bg-white);
 }
