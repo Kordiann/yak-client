@@ -32,12 +32,12 @@ class NavBar extends Component {
       userName: '',
 
       phrase: '',
+      isSearch: true,
 
       isFixed : false,
       fixedClassName : 'sub_nav fixed_nav',
       nonFixedClassName : 'sub_nav',
 
-      isSearch : false,
       searchClassName : 'input_search',
       nonSearchClassName : '',
 
@@ -49,7 +49,6 @@ class NavBar extends Component {
     };
     
     this.handleScroll = this.handleScroll.bind(this);
-    this.makeSearch = this.makeSearch.bind(this);
     this.storePhrase = this.storePhrase.bind(this);
   }
 
@@ -83,17 +82,17 @@ class NavBar extends Component {
     }
   }
 
-  storePhrase = (e) => {
-    this.props.pushSearchPhrase(e.target.value);
+  resetInput = () => {
+    this.setState({
+      phrase: '',
+    });
   }
 
-  makeSearch = (e) => {
-    e.preventDefault();
-    if (!this.state.isSearch) {
-      this.setState({
-        isSearch : true,
-      });
-    }
+  storePhrase = (e) => {
+    this.setState({
+      phrase: e.target.value,
+    });
+    this.props.pushSearchPhrase(e.target.value);
   }
 
   toggle = () => {
@@ -103,6 +102,7 @@ class NavBar extends Component {
   }
 
   render() {
+    const { isSearch, phrase } = this.state;
       return (
         <div id="root">
           <div className="nav">
@@ -127,24 +127,25 @@ class NavBar extends Component {
                             this.state.isFixed ?
                             ('') :
                             (this.state.translate_Z100)
-                            }><i className="fas fa-address-book"></i></li>
+                            }><span className='nav_span'>Users</span></li>
                     <li className={
                             this.state.isFixed ?
                             ('search ') :
                             ('search ' + this.state.translate_Z100)
                             }>
-                      <input className='search_input' 
-                              type="text" 
-                              onChange={e => this.storePhrase(e)} 
-                              placeholder="Search"></input>
-                      <Link to='/search'>
-                        <i className="fas fa-search"></i></Link>
+                      {isSearch ? (<input className='search_input' 
+                              type="text"
+                              placeholder="Search"
+                              onChange={e => this.storePhrase(e)}
+                              value={phrase}></input>) :
+                              (null)}
+                      <Link onClick={this.resetInput} to='/search'><i className="fas fa-search"></i></Link>
                     </li>
                     <li className={
                             this.state.isFixed ?
-                            ('') :
-                            (this.state.translate_Z100)
-                            }><i className="fas fa-list-ul"></i></li>
+                            ('last') :
+                            ('last ' + this.state.translate_Z100)
+                            }><span className='nav_span'>Movie list</span></li>
                     <li> 
                       {this.props.isLogged ?
                       (<Avatar />) :

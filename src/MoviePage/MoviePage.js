@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setupMovieId } from '../redux/reducer';
+import { Redirect } from 'react-router-dom';
 import { getSendingProps } from '../Helpers/SendingProps'; 
 
 import './moviepage.css';
@@ -9,7 +10,8 @@ var URL = 'http://localhost:8080/movies/movie?id=';
 
 const mapStateToProps = state => {
   return {
-    movieid: state.movieid
+    movieid: state.movieid,
+    isLogged: state.isLogged
   };
 };
 
@@ -27,29 +29,35 @@ class MoviePage extends Component {
     this.state = {
       isLoaded: false,
       results: [],
+      toRedirect: false,
     };
-  }
-
-  componentWillUnmount() {
-    this.props.setupMovieId(null);
   }
 
   componentDidMount() {
     this.fetchSearchingData();
+    this.props.setupMovieId(null);
   }
 
   fetchSearchingData = (e) => {
     fetch(`${URL}${this.props.movieid}`, getSendingProps())
       .then(res => res.json())
       .then(json => {
-        this.setState({
-          isLoaded: true,
-          results: json
-        })
+        if(json.hasOwnProperty('status')) {
+          this.setState({
+            toRedirect: true,
+          });
+        } else {
+          this.setState({
+            isLoaded: true,
+            results: json
+          });
+        } 
+        console.log(json)
       });
   }
 
   render() {
+    if (!this.state.toRedirect) {
       return (
         <div id="moviepage" className="movie">
             <div className="card movie_card">
@@ -63,6 +71,9 @@ class MoviePage extends Component {
             </div>
         </div>
       );
+    } else {
+        return <Redirect to='/' />
+    }
   }
 }
 

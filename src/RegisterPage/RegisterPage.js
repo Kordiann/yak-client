@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import validator from 'validator';
+import { postSendingProps } from '../Helpers/SendingProps';
 
 import './registerpage.css';
 
-var URL_WITHOUT_PARAMS = "http://localhost:8080/user/add?";
-
-let header = new Headers({
-  'Access-Control-Allow-Origin':'*',
-  'Content-Type': 'multipart/form-data'
-});
-
-let sentData = {
-  method: 'POST',
-  header: header,
-  mode: 'cors',
-}
+var URL_WITHOUT_PARAMS = "http://localhost:8080/users/add?";
 
 function validate(login, email, password) {
   // True means invalid
@@ -78,7 +68,7 @@ class RegisterPage extends Component {
   postNewUser = (login, email, password) => {
     var URL = `${URL_WITHOUT_PARAMS}${"userName="}${login}${"&password="}${password}${"&email="}${email}`;
 
-    fetch(URL, sentData)
+    fetch(URL, postSendingProps())
       .then(res => res.json())
       .then(json => {
         this.setState({

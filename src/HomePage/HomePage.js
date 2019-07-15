@@ -11,7 +11,7 @@ import  { showElement,
 
 import './homepage.css';
 
-const URL = 'http://localhost:8080/movies/main?count=4';
+const URL = 'http://localhost:8080/movies/home?count=4';
 
 const movie_card_container = 'movie_card_container ';
 

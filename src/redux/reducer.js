@@ -19,10 +19,12 @@ export function login(login, password) {
     dispatch(setLoginSuccess(false));
     dispatch(setLoginError(null));
     dispatch(setUserName(login));
+    dispatch(setUserId(null));
 
-    callLoginApi(login, password, id => {
+    callLoginApi(login, password, userID => {
       dispatch(setLoginPending(false));
-      if (id !== null) {
+      if (userID != null) {
+        dispatch(setUserId(userID));
         dispatch(setLoginSuccess(true));
         dispatch(setIsLogged(true));
       } else {
@@ -34,6 +36,7 @@ export function login(login, password) {
 
 export function deleteUser() {
   return dispatch => {
+    dispatch(setUserId(null));
     dispatch(setUserName(null));
     dispatch(setUserId(null));
     dispatch(setIsLogged(false));
@@ -66,10 +69,10 @@ function setSearchPhrase(phrase) {
   }
 }
 
-function setUserId(id) {
+function setUserId(userID) {
     return {
       type: SET_USER_ID,
-      id
+      userID
     }
 }
 
@@ -116,7 +119,7 @@ function callLoginApi(login, password, callback) {
         .then(res => res.json())
         .then(json => {
             if (json.Response === "200") {
-                return callback(json.id);
+                return callback(json.Id);
             } else {
                 return callback(null);
             }
@@ -131,6 +134,7 @@ export default function reducer(state = {
   loginError: null,
   userName: null,
   isLogged: false,
+  userID: null,
 
   phrase: null,
   movieid: null,
@@ -159,7 +163,7 @@ export default function reducer(state = {
 
     case SET_USER_ID:
       return Object.assign({}, state, {
-        id: action.id
+        userID: action.userID
     });
 
     case SET_IS_LOGGED:

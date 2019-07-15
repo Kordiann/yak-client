@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Input ,Button } from 'reactstrap';
 import Masonry from 'react-masonry-component';
 import { connect } from 'react-redux';
-import { getSendingProps } from '../Helpers/SendingProps';
+import { getSendingProps, postSendingProps } from '../Helpers/SendingProps';
+import { pushSearchPhrase } from '../redux/reducer';
+
 
 import './searchpage.css';
 
 const API_URL_WITH_PARAM = 'http://localhost:8080/movies?title=';
-const API_URL_FOR_ALL_MOVIES = 'http://localhost:8080/movies/main?count=10';
+const API_URL_FOR_ALL_MOVIES = 'http://localhost:8080/movies/search?count=10';
 const API_ULR_TO_SAVE_MOVIE = 'http://localhost:8080/movies/save/movie?movieIMDBID=';
 
 const masonryOptions = {
@@ -20,6 +22,12 @@ const mapStateToProps = state => {
     phrase: state.phrase
   };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    pushSearchPhrase: (phrase) => dispatch(pushSearchPhrase(phrase)),
+  };
+}
 
 class SearchPage extends Component {
 
@@ -39,6 +47,7 @@ class SearchPage extends Component {
       this.fetchSearchingData();
     } else {
       this.fetchSearchingData(this.props.phrase);
+      this.props.pushSearchPhrase(null);
     }
   }
 
@@ -64,20 +73,11 @@ class SearchPage extends Component {
   saveMe = (e, imdbID) => {
     e.preventDefault();
 
-    let header = new Headers({
-      'Access-Control-Allow-Origin':'*',
-      'Content-Type': 'multipart/form-data'
-    });
-
-    let sentData = {
-      method: 'POST',
-      header: header,
-      mode: 'cors',
-    }
-
     var URL = `${API_ULR_TO_SAVE_MOVIE}${imdbID}${'&userName='}${this.props.userName}`;
 
-    fetch(URL, sentData)
+    e.currentTarget.classList.add('hidden');
+
+    fetch(URL, postSendingProps())
       .then()
   }
   
@@ -94,13 +94,13 @@ class SearchPage extends Component {
                     e.target.src='https://m.media-amazon.com/images/M/MV5BNzIxNTM5NTM2OV5BMl5BanBnXkFtZTgwNDQ2OTkwMzE@._V1_SX300.jpg'}}
                     src={result.poster} />
                   <div className="card-body">
-                    <h5 className="card-title">{result.title}</h5>
+                    <p className="card-title">{result.title}</p>
                   </div>
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item">Type: {result.type}</li>
                     <li className="list-group-item">Year: {result.year}</li>
                     {this.props.userName != null ? ( <li className="list-group-item noliststyle">
-                      <button type="button " onClick={(e) => this.saveMe(e, result.imdbID)}  className="btn btn-success">Save</button>
+                      <button type="button " onClick={(e) => this.saveMe(e, result.imdbID)}  className="btn ">Save</button>
                     </li> ) : (null) }
                   </ul>
             </div> 
@@ -115,8 +115,7 @@ class SearchPage extends Component {
                               name="search" 
                               id="search" 
                               onChange={e => this.fetchSearchingData(e.target.value)} 
-                              placeholder="Search films..." 
-                              value={this.props.phrase}/>
+                              placeholder="Search films..."/>
                         <span className="input-group-btn">
                           <Button className="btn-success">go</Button>
                         </span>
@@ -139,4 +138,4 @@ class SearchPage extends Component {
 
 
 
-export default connect(mapStateToProps)(SearchPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

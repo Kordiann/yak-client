@@ -12,16 +12,20 @@ class LoginPage extends Component {
     super(props);
     this.state = {
       userName: '',
-      password: '',
       isLoginPending: false,
       isLoginSuccess: false,
-      loginError: null
+      loginError: null,
+
+      toReset: false,
+      name: '',
+      password: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   render() {
-    let {isLoginPending, isLoginSuccess, loginError} = this.props;
+    let { isLoginPending, isLoginSuccess, loginError } = this.props;
+    let { name, password } = this.state;
 
     if (this.props.isLoginSuccess) {
       return <Redirect to="/" />
@@ -41,7 +45,8 @@ class LoginPage extends Component {
                         ("error")}>login</label>
                   <input type=""
                         className="form-control"
-                        name="name" 
+                        name="login"
+                        value={name} 
                         onChange={e => this.setState({name: e.target.value})} />
               </div> 
 
@@ -51,7 +56,8 @@ class LoginPage extends Component {
                         ("error")}>password</label>
                   <input type="password" 
                         className="form-control"
-                        name="password" 
+                        name="password"
+                        value={password} 
                         onChange={e => this.setState({password: e.target.value})} />
               </div> 
 
@@ -66,12 +72,14 @@ class LoginPage extends Component {
               </div>
             </form>
           </div>
-          <Link to='/register'>
+          
             <div className="registration_content">
+            <Link to='/register'>
               <i className="fas fa-registered"></i>
               <label>egister</label>
+              </Link>
             </div>
-          </Link>
+          
         </div>
       </div>
     )
@@ -94,7 +102,8 @@ const mapStateToProps = (state) => {
     isLoginSuccess: state.isLoginSuccess,
     loginError: state.loginError,
     isLogged: true,
-    userName: state.userName
+    userName: state.userName,
+    userID: state.userID
   };
 }
 

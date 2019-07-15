@@ -48,7 +48,7 @@ class Avatar extends React.Component {
 
     render() {
         if(this.state.toRedirect) {
-            return <Redirect to='/homepage' push={false} />;
+            return <Redirect to='/' push={false} />;
         }
 
         return <div className='dropdown'>

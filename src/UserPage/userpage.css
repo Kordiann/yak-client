@@ -28,3 +28,9 @@
     margin: 7.5px 15px;
     float: left;
 }
+
+.user_info {
+    margin: 20px 0;
+    font-size: 20px;
+    color: var(--darker-dark-green);   
+}

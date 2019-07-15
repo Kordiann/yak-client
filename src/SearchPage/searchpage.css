@@ -27,3 +27,17 @@
 .noliststyle {
     list-style: none!important;
 }
+
+.card-title {
+    width: 300px;
+    word-wrap: break-word!important;
+}
+
+.nav_span {
+    font-size: 18px!important;
+    padding: 5px!important;
+}
+
+.last {
+    margin-right: 0!important;
+}
