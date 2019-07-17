@@ -7,15 +7,21 @@ import { Switch, Route } from '../node_modules/react-router-dom'
 import MoviesList from './MoviesList/MoviesList';
 import MoviePage from './MoviePage/MoviePage';
 import UserPage from './UserPage/UserPage';
+import MyMoviesPage from './MyMoviesPage/MyMoviesPage';
+import UserProfile from './Components/UserProfile';
 
 export const Main = () => (
-      <Switch>
+    <Switch>
+
         <Route exact path='/' component={ HomePage }/>
         <Route exact path='/search' component={ SearchPage }/>
         <Route exact path='/login' component={ LoginPage }/>
         <Route exact path='/register' component={ RegisterPage }/>
         <Route exact path='/movies' component={ MoviesList }/>
         <Route exact path='/moviepage' component={ MoviePage }/>
+        <Route exact path='/mymoviespage' component={ MyMoviesPage }/>
         <Route exact path='/userpage' component={ UserPage }/>
-      </Switch>
+        <Route exact path='/userprofile' component={ UserProfile }/>
+
+    </Switch>
 )

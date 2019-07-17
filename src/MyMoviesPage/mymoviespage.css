@@ -1,0 +1,13 @@
+.film {
+    width: 300px!important;
+    height: 400px!important;
+    margin: 40px auto !important;
+}
+
+.image-element-class {
+    cursor: pointer;
+}
+
+#mymoviespage {
+    background-color: var(--dark-green);
+}

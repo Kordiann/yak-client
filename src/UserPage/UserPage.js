@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { getSendingProps } from '../Helpers/SendingProps'; 
+import { getSendingProps ,postSendingProps } from '../Helpers/SendingProps'; 
 
 import './userpage.css';
 
 const URL = 'http://localhost:8080/users/user?userName=';
+const URL_PASSWORD = 'http://localhost:8080/users/user/change_password?userID=';
 
 const mapStateToProps = state => {
     return {
@@ -28,7 +29,15 @@ class UserPage extends React.Component {
 
         this.state = {
             email: '',
+            password: '',
+            _password: '',
+            showMenu: false,
+
+            error: false,
         }
+
+        this.showMenu = this.showMenu.bind(this);
+        this.closeMenu = this.closeMenu.bind(this);
     }
 
     componentDidMount() {
@@ -44,19 +53,62 @@ class UserPage extends React.Component {
                 isActivate: json.isActivate,
                 isActivationCodeSend: json.isActivationCodeSend
             });
-            console.log(json)
           });
     }
 
+    postData = () => {
+        const { password, _password } = this.state;
+        
+        fetch(`${URL_PASSWORD}${this.props.userID}${'&oldPassword='}${password}${'&newPassword='}${_password}`, postSendingProps())
+        .then(res => res.json())
+        .then(json => {
+
+            console.log(json);
+
+            if (json.Response === "200") {
+                this.setState({ 
+                    error: false,
+                    password: '',
+                    _password: ''
+                }); 
+                 this.closeMenu();
+                 console.log("  sss " )
+                }
+            else {
+                console.log("  sdawsddss " )
+
+                this.setState({ 
+                    error: true,
+                    password: '',
+                    _password: ''
+                }); 
+            } 
+        })
+    }
+
+    showMenu(event) {
+        event.preventDefault();
+
+        this.setState({
+            showMenu: true
+        });
+    }
+
+    closeMenu() {
+        this.setState({
+            showMenu: false
+        });
+    }
+
     render() {
-        const { email, isActivate, isActivationCodeSend } = this.state;
+        const { error, showMenu, email, isActivate, isActivationCodeSend } = this.state;
+        const { password, _password } = this.state;
 
         if(this.props.isLogged) {
             return (
             <div id='userpage' className='container'>
                 <div className='card'>
                     <ul className='user_settings_list'>
-                        <li></li>
                         <li><img className='user_settings_avatar'
                                     alt=''
                                     width='52px' 
@@ -67,8 +119,27 @@ class UserPage extends React.Component {
                         {!isActivate && !isActivationCodeSend ? (<li>
                             <div className='btn'>Send Activation Message</div>
                         </li>) : ('')}
+                        <li><div onClick={this.showMenu} className="btn">Change Password</div></li>
                     </ul>
                 </div>
+               {showMenu ? ( <div id="change_password" className="change_password_form card">
+                   <div className='exit' onClick={this.closeMenu}>x</div>
+                    <input type="epassword" 
+                            name="epassword" 
+                            id="password" 
+                            className={error ? ("password_input error") : ("password_input")}
+                            value={password}
+                            onChange={e => this.setState({password: e.currentTarget.value})} 
+                            placeholder="old password"></input>
+                    <input type="_password" 
+                            name="_password" 
+                            id="_password" 
+                            className={error ? ("password_input error") : ("password_input")}
+                            value={_password}
+                            onChange={e => this.setState({_password: e.currentTarget.value})} 
+                            placeholder="new password"></input>
+                    <div className="btn" onClick={this.postData}>submit</div>
+                </div>) : (null)}
             </div>
             )
         } else { 

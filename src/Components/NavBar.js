@@ -127,7 +127,7 @@ class NavBar extends Component {
                             this.state.isFixed ?
                             ('') :
                             (this.state.translate_Z100)
-                            }><span className='nav_span'>Users</span></li>
+                            }><Link to="/userprofile"><span className='nav_span'>Users</span></Link></li>
                     <li className={
                             this.state.isFixed ?
                             ('search ') :
@@ -141,12 +141,12 @@ class NavBar extends Component {
                               (null)}
                       <Link onClick={this.resetInput} to='/search'><i className="fas fa-search"></i></Link>
                     </li>
-                    <li className={
+                    <Link to='/movies'><li className={
                             this.state.isFixed ?
                             ('last') :
                             ('last ' + this.state.translate_Z100)
-                            }><span className='nav_span'>Movie list</span></li>
-                    <li> 
+                            }><span className='nav_span'>Movie list</span></li> </Link>
+                    <li>
                       {this.props.isLogged ?
                       (<Avatar />) :
                       (<Link to='/login'><i className="fas fa-sign-in-alt"></i></Link>)}

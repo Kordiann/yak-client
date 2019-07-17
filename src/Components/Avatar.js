@@ -60,6 +60,8 @@ class Avatar extends React.Component {
                         onClick={this.showMenu}/>
                     {this.state.showMenu ? 
                         (<div className="dropdown_content">
+                            <Link to='/mymoviespage'><dir>My Movies</dir></Link>
+                            <Link to='/messages'><dir>Messages</dir></Link>
                             <Link to='/userpage'><dir>Profile</dir></Link>
                             <dir onClick={this.logout}>Log out</dir>
                         </div>) 
