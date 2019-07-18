@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import { postSendingProps } from '../Helpers/SendingProps';
+import { register } from '../Helpers/API';
 
 import './registerpage.css';
-
-var URL_WITHOUT_PARAMS = "http://localhost:8080/users/add?";
 
 function validate(login, email, password) {
   // True means invalid
@@ -66,7 +65,7 @@ class RegisterPage extends Component {
   }
 
   postNewUser = (login, email, password) => {
-    var URL = `${URL_WITHOUT_PARAMS}${"userName="}${login}${"&password="}${password}${"&email="}${email}`;
+    var URL = register(login, password, email);
 
     fetch(URL, postSendingProps())
       .then(res => res.json())

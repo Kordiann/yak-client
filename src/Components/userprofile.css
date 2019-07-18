@@ -14,18 +14,34 @@
     font-size: 20px;
     line-height: 50px;
     margin: auto;
+    margin-left: 20px; 
     color: var(--darker-darks-green);
 }
 
 .profile {
     max-width: 310!important;
     min-height: 10% !important;
-    height: 13% !important;
+    height: 100px;
 
     flex:  0 0 310px;
 
     cursor: pointer;
     clear: both;
+
+    transition: 100ms ease all;
+}
+
+.big_profile {
+    min-width: 600px!important;
+    min-height: 45% !important;
+    height: 45% !important;
+
+    flex:  0 0 310px;
+
+    cursor: pointer;
+    clear: both;
+
+    transition: 600ms ease all;
 }
 
 .justify {
@@ -42,4 +58,43 @@
 
     display: flex;
     flex-wrap: wrap;
+}
+
+.user_details {
+    margin: auto;
+    margin-top: 80px;
+    padding: 25px;
+
+    width: 80%;
+}
+
+.friend {
+    width: 80px;
+    padding: 5px 40px;
+}
+
+.display_none {
+    visibility: hidden !important;
+    display: none !important;
+
+    transition: 0ms ease all;
+}
+
+.usermovies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.small-card {
+    width: 80px;
+    height: 80px;
+
+    margin: 15px;
+
+    border: solid 1px var(--darker-darks-green);
+}
+
+.font {
+    font-size: 25px;
 }

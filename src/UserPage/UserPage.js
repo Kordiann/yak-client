@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { getSendingProps ,postSendingProps } from '../Helpers/SendingProps'; 
+import { getSendingProps, postSendingProps } from '../Helpers/SendingProps'; 
+import { changePassword,
+        getUserByUserName } from '../Helpers/API';
 
 import './userpage.css';
-
-const URL = 'http://localhost:8080/users/user?userName=';
-const URL_PASSWORD = 'http://localhost:8080/users/user/change_password?userID=';
 
 const mapStateToProps = state => {
     return {
@@ -45,7 +44,9 @@ class UserPage extends React.Component {
     }
 
     fetchSearchingData = (e) => {
-        fetch(`${URL}${this.props.userName}${'&userID='}${this.props.userID}`, getSendingProps())
+        const URL = getUserByUserName(this.props.userName, this.props.userID);
+
+        fetch(URL, getSendingProps())
           .then(res => res.json())
           .then(json => {
             this.setState({
@@ -58,13 +59,11 @@ class UserPage extends React.Component {
 
     postData = () => {
         const { password, _password } = this.state;
+        const URL = changePassword(this.props.userID, password, _password);
         
-        fetch(`${URL_PASSWORD}${this.props.userID}${'&oldPassword='}${password}${'&newPassword='}${_password}`, postSendingProps())
+        fetch(URL, postSendingProps())
         .then(res => res.json())
         .then(json => {
-
-            console.log(json);
-
             if (json.Response === "200") {
                 this.setState({ 
                     error: false,
@@ -72,11 +71,8 @@ class UserPage extends React.Component {
                     _password: ''
                 }); 
                  this.closeMenu();
-                 console.log("  sss " )
                 }
             else {
-                console.log("  sdawsddss " )
-
                 this.setState({ 
                     error: true,
                     password: '',

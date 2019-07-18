@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { setupMovieId } from '../redux/reducer';
 import { Redirect } from 'react-router-dom';
 import { getSendingProps } from '../Helpers/SendingProps'; 
+import { getMovieById } from '../Helpers/API';
 
 import './moviepage.css';
-
-var URL = 'http://localhost:8080/movies/movie?id=';
 
 const mapStateToProps = state => {
   return {
@@ -39,7 +38,9 @@ class MoviePage extends Component {
   }
 
   fetchSearchingData = (e) => {
-    fetch(`${URL}${this.props.movieid}`, getSendingProps())
+    const URL = getMovieById(this.props.movieid);
+
+    fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
         if(json.hasOwnProperty('status')) {

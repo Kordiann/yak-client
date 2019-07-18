@@ -4,13 +4,12 @@ import Masonry from 'react-masonry-component';
 import { connect } from 'react-redux';
 import { getSendingProps, postSendingProps } from '../Helpers/SendingProps';
 import { pushSearchPhrase } from '../redux/reducer';
+import { getMoviesByTitle, 
+        getMovies,
+        saveMovie } from '../Helpers/API';
 
 
 import './searchpage.css';
-
-const API_URL_WITH_PARAM = 'http://localhost:8080/movies?title=';
-const API_URL_FOR_ALL_MOVIES = 'http://localhost:8080/movies/search?count=10';
-const API_ULR_TO_SAVE_MOVIE = 'http://localhost:8080/movies/save/movie?movieIMDBID=';
 
 const masonryOptions = {
   transitionDuration: 0
@@ -55,9 +54,9 @@ class SearchPage extends Component {
     var URL = '';
 
     if(e == null) {
-      URL = API_URL_FOR_ALL_MOVIES;
+      URL = getMovies(20);
     } else {
-      URL = `${API_URL_WITH_PARAM}${e}`;
+      URL = getMoviesByTitle(e);
     }
 
     fetch(URL, getSendingProps())
@@ -73,7 +72,7 @@ class SearchPage extends Component {
   saveMe = (e, imdbID) => {
     e.preventDefault();
 
-    var URL = `${API_ULR_TO_SAVE_MOVIE}${imdbID}${'&userName='}${this.props.userName}`;
+    var URL = saveMovie(imdbID, this.props.userName);
 
     e.currentTarget.classList.add('hidden');
 
@@ -85,7 +84,7 @@ class SearchPage extends Component {
     const searchResult = this.state.results.map((result) => { 
       return (
            <li key={result.imdbID}  className="image-element-class">
-            <div className="card film">
+            <div className="card">
                 <img className="card-img-top"
                     width="300px"
                     height="400px"

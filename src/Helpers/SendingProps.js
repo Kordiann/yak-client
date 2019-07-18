@@ -1,4 +1,3 @@
-
 const header = new Headers({
   'Access-Control-Allow-Origin':'*',
   'Content-Type': 'multipart/form-data'

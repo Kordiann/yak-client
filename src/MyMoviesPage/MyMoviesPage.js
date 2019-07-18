@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { getSendingProps } from '../Helpers/SendingProps';
 import { Redirect } from 'react-router-dom';
 import { setupMovieId } from '../redux/reducer';
-
+import { getUserMovies } from '../Helpers/API';
 
 import './mymoviespage.css';
-
-const URL = 'http://localhost:8080/users/user/movies?userID=';
 
 const masonryOptions = {
     transitionDuration: 0
@@ -43,8 +41,8 @@ class MyMoviesPage extends Component {
   }
 
   fetchSearchingData = (e) => {
-    var FINAL_URL = `${URL}${this.props.userID}`;
-    fetch(FINAL_URL, getSendingProps())
+    var URL = getUserMovies(this.props.userID);
+    fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -63,13 +61,15 @@ class MyMoviesPage extends Component {
   }
 
   render() {
+    if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
+
     const searchResult = this.state.results.map((result) => { 
         return (
              <li key={result.imdbID} 
-                data-ref={result.imdbID}
-                className="image-element-class"
-                onClick={e => this.saveMovieIdAndGo(e)}>
-              <div className="card film">
+                className="image-element-class">
+              <div className="card film"
+              data-ref={result.imdbID}
+              onClick={e => this.saveMovieIdAndGo(e)}>
                   <img className="card-img-top"
                       width="300px"
                       height="300px"
@@ -91,7 +91,6 @@ class MyMoviesPage extends Component {
              </li>
           );
       });
-      if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
       return (
           <div id="mymoviespage">
               <Masonry

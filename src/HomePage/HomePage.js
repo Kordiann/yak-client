@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setupMovieId } from '../redux/reducer';
 import { getSendingProps } from '../Helpers/SendingProps';
 import { Redirect } from 'react-router-dom';
+import { getHomeMovies } from '../Helpers/API';
 
 import  { showElement,
   hideElement,
@@ -10,8 +11,6 @@ import  { showElement,
   hideTitle } from '../Helpers/Animations';
 
 import './homepage.css';
-
-const URL = 'http://localhost:8080/movies/home?count=4';
 
 const movie_card_container = 'movie_card_container ';
 
@@ -46,6 +45,8 @@ class HomePage extends Component {
   }
 
   fetchSearchingData = (e) => {
+    const URL = getHomeMovies();
+
     fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
