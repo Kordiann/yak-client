@@ -71,3 +71,22 @@ export function iconOpacityOff(e) {
     elementRemove(element, opacity_v75);
 }
 
+export function userProfile(e, i) {
+    const el = e.currentTarget;
+    const condition = Boolean(el.classList.contains('profile'));
+
+    if (condition) {
+      el.classList.add('big_profile');
+      el.classList.remove('profile');
+
+      const child = document.getElementById(i);
+      child.classList.remove('display_none');
+
+    } else {
+      el.classList.remove('big_profile');
+      el.classList.add('profile');
+
+      const child = document.getElementById(i);
+      child.classList.add('display_none');
+    }
+  }

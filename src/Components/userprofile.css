@@ -45,6 +45,7 @@
 }
 
 .justify {
+    min-height: 65.2%;
     width: 100%;
     background-color: var(--dark-green);
 }

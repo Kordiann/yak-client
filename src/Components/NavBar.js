@@ -127,7 +127,7 @@ class NavBar extends Component {
                             this.state.isFixed ?
                             ('') :
                             (this.state.translate_Z100)
-                            }><Link to="/userprofile"><span className='nav_span'>Users</span></Link></li>
+                            }><Link to="/users"><span className='nav_span'>Users</span></Link></li>
                     <li className={
                             this.state.isFixed ?
                             ('search ') :
@@ -135,7 +135,7 @@ class NavBar extends Component {
                             }>
                       {isSearch ? (<input className='search_input' 
                               type="text"
-                              placeholder="Search"
+                              placeholder="Search Movie"
                               onChange={e => this.storePhrase(e)}
                               value={phrase}></input>) :
                               (null)}

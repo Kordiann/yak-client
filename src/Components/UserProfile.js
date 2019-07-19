@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSendingProps, postSendingProps } from '../Helpers/SendingProps';
+import { getSendingProps } from '../Helpers/SendingProps';
 import { getAllUsers,
-         sendFriendRequest,
          getUserFriends } from '../Helpers/API';
+import { userProfile } from '../Helpers/Animations';
 import { setupMovieId } from '../redux/reducer';
 import { Redirect } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-class MoviePage extends Component {
+class UserProfile extends Component {
 
   constructor(props) {
     super(props);
@@ -36,8 +36,6 @@ class MoviePage extends Component {
   }
 
   componentDidMount() {
-    this.fetchSearchingData();
-
     if(this.props.isLogged) {
       this.fetchUserFriends();
     }
@@ -49,10 +47,8 @@ class MoviePage extends Component {
     fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
-        console.log(json.Friends);
-
         this.setState({
-          friends: json.Friends
+          results: json.Friends
         });
       });
   }
@@ -78,32 +74,6 @@ class MoviePage extends Component {
     });
   }
 
-  sendFriend = (sender, recipient) => {
-    const URL = sendFriendRequest(sender, recipient);
-
-    fetch(URL, postSendingProps());
-  }
-
-  userProfile = (e, i) => {
-    const el = e.currentTarget;
-    const condition = Boolean(el.classList.contains('profile'));
-
-    if (condition) {
-      el.classList.add('big_profile');
-      el.classList.remove('profile');
-
-      const child = document.getElementById(i);
-      child.classList.remove('display_none');
-
-    } else {
-      el.classList.remove('big_profile');
-      el.classList.add('profile');
-
-      const child = document.getElementById(i);
-      child.classList.add('display_none');
-    }
-  }
-
   saveMovieIdAndGo = (e) => {
     this.props.setupMovieId(e.currentTarget.attributes.getNamedItem("data-ref").value);
 
@@ -120,17 +90,13 @@ class MoviePage extends Component {
         return (
             <div key={result.userName}
              className='card profile'
-             onClick={e => this.userProfile(e, i)}>
+             onClick={e => userProfile(e, i)}>
                 <div className='avatar'>
                     <img width='80px'alt='' height='80px' src='lol.png'/>
                     <span>{result.userName}</span>
                 </div>
 
                 <div id={i} className='user_details display_none'>
-                  {this.props.isLogged ? 
-                  (<div onClick={this.sendFriend(this.props.userName, result.userName)} 
-                  className='btn friend'>Add Friend</div>) : 
-                  (null)}
                   <span className='font'>Saved movies</span>
                   <div className='usermovies'>
                     {result.SavedMovies.slice(0, 12).map((movie, i) => {
@@ -162,4 +128,4 @@ class MoviePage extends Component {
 }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

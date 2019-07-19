@@ -9,6 +9,7 @@ import MoviePage from './MoviePage/MoviePage';
 import UserPage from './UserPage/UserPage';
 import MyMoviesPage from './MyMoviesPage/MyMoviesPage';
 import UserProfile from './Components/UserProfile';
+import UsersPage from './UsersPage/UsersPage';
 
 export const Main = () => (
     <Switch>
@@ -22,6 +23,7 @@ export const Main = () => (
         <Route exact path='/mymoviespage' component={ MyMoviesPage }/>
         <Route exact path='/userpage' component={ UserPage }/>
         <Route exact path='/userprofile' component={ UserProfile }/>
+        <Route exact path='/users' component={ UsersPage }/>
 
     </Switch>
 )
