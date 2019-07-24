@@ -3,7 +3,9 @@ import { Input ,Button } from 'reactstrap';
 import Masonry from 'react-masonry-component';
 import { connect } from 'react-redux';
 import { getSendingProps, postSendingProps } from '../Helpers/SendingProps';
-import { pushSearchPhrase } from '../redux/reducer';
+import { Redirect } from 'react-router-dom';
+import { pushSearchPhrase,
+        setupMovieId } from '../redux/reducer';
 import { getMoviesByTitle, 
         getMovies,
         saveMovie } from '../Helpers/API';
@@ -25,6 +27,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     pushSearchPhrase: (phrase) => dispatch(pushSearchPhrase(phrase)),
+    setupMovieId: (movieid) => dispatch(setupMovieId(movieid)),
   };
 }
 
@@ -36,6 +39,7 @@ class SearchPage extends Component {
     this.state = {
       results: [],
       name: this.props.userName,
+      toRedirect: false,
     }
 
     this.saveMe = this.saveMe.bind(this);
@@ -48,6 +52,14 @@ class SearchPage extends Component {
       this.fetchSearchingData(this.props.phrase);
       this.props.pushSearchPhrase(null);
     }
+  }
+
+  saveMovieIdAndGo = (e) => {
+    this.props.setupMovieId(e.currentTarget.attributes.getNamedItem("data-ref").value);
+
+    this.setState({
+      toRedirect: true,
+    });
   }
 
   fetchSearchingData = (e) => {
@@ -81,6 +93,9 @@ class SearchPage extends Component {
   }
   
   render() {
+
+    if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
+
     const searchResult = this.state.results.map((result) => { 
       return (
            <li key={result.imdbID}  className="image-element-class">
@@ -89,6 +104,8 @@ class SearchPage extends Component {
                     width="300px"
                     height="400px"
                     alt={result.title} 
+                    data-ref={result.imdbID}
+                    onClick={this.saveMovieIdAndGo}
                     onError={(e)=>{e.target.onerror = null; 
                     e.target.src='https://m.media-amazon.com/images/M/MV5BNzIxNTM5NTM2OV5BMl5BanBnXkFtZTgwNDQ2OTkwMzE@._V1_SX300.jpg'}}
                     src={result.poster} />
@@ -111,6 +128,7 @@ class SearchPage extends Component {
               <div className="App">
                       <div className="input-group">
                         <Input type="search" 
+                              className='input'
                               name="search" 
                               id="search" 
                               onChange={e => this.fetchSearchingData(e.target.value)} 

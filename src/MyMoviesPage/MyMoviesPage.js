@@ -91,6 +91,7 @@ class MyMoviesPage extends Component {
              </li>
           );
       });
+
       return (
           <div id="mymoviespage">
               <Masonry

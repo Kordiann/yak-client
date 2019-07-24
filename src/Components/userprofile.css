@@ -99,3 +99,20 @@
 .font {
     font-size: 25px;
 }
+
+.req_btn {
+    width: 160px;
+}
+
+.friend {
+    border: 2px solid var(--light-green)!important;
+}
+
+.friend_ask {
+    border: 2px solid var(--dark-blue)!important;
+}
+
+.friend_req {
+    border: none!important;
+}
+

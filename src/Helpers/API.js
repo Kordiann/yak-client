@@ -43,5 +43,13 @@ export function sendFriendRequest(sender, recipient) {
 }
 
 export function getUserFriends(userID) {
-    return `${'http://localhost:8080/friends/userfriends?userID='}${userID}`;
+    return `${'http://localhost:8080/friends/userFriends?userID='}${userID}`;
+}
+
+export function getUsersWithoutID() {
+    return `${'http://localhost:8080/friends/usersForUsersPage'}`;
+}
+
+export function getUsersForUsersPage(userID) {
+    return `${'http://localhost:8080/friends/usersForUsersPage?userID='}${userID}`;
 }

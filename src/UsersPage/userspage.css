@@ -1,0 +1,23 @@
+#userspage {
+    margin-top: 12px;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+
+    min-height: 700px;
+}
+
+.users_input {
+    width: 35%!important;
+    margin: 30px auto;
+}
+
+.input_container {
+    width: 100%;
+}
+
+.friend_btn {
+    max-width: 20%;
+}

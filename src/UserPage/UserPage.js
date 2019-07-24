@@ -49,10 +49,11 @@ class UserPage extends React.Component {
         fetch(URL, getSendingProps())
           .then(res => res.json())
           .then(json => {
+              console.log(json)
             this.setState({
-                email: json.Email,
-                isActivate: json.isActivate,
-                isActivationCodeSend: json.isActivationCodeSend
+                email: json.user.email,
+                isActivate: json.user.ativate,
+                isActivationCodeSend: json.user.activationCodeSend
             });
           });
     }
