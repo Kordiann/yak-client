@@ -15,6 +15,7 @@ const masonryOptions = {
 const mapStateToProps = state => {
   return {
     userID: state.userID,
+    isLogged: state.isLogged,
     movieid: state.movieid
   };
 };
@@ -37,7 +38,9 @@ class MyMoviesPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchSearchingData();
+    if(this.props.isLogged) {
+      this.fetchSearchingData();
+    }
   }
 
   fetchSearchingData = (e) => {
@@ -63,16 +66,18 @@ class MyMoviesPage extends Component {
   render() {
     if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
 
+    if(!this.props.isLogged) return<Redirect to='/' push={true} />;
+
     const searchResult = this.state.results.map((result) => { 
         return (
              <li key={result.imdbID} 
                 className="image-element-class">
-              <div className="card film"
+              <div className="card film_card"
               data-ref={result.imdbID}
               onClick={e => this.saveMovieIdAndGo(e)}>
                   <img className="card-img-top"
                       width="300px"
-                      height="300px"
+                      height="400px"
                       alt={result.title} 
                       onError={(e)=>{e.target.onerror = null; 
                       e.target.src='https://m.media-amazon.com/images/M/MV5BNzIxNTM5NTM2OV5BMl5BanBnXkFtZTgwNDQ2OTkwMzE@._V1_SX300.jpg'}}

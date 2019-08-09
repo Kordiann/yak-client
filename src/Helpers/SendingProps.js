@@ -22,3 +22,13 @@ export function postSendingProps() {
 
   return sentData;
 }
+
+export function deleteSendingProps() {
+  let sentData = {
+    method: 'DELETE',
+    header: header,
+    mode: 'cors',
+  }
+
+  return sentData;
+}

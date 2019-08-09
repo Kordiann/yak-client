@@ -1,0 +1,13 @@
+#messagespage {
+    width: 100%;
+    height: 800px;
+}
+
+.usersList{
+    width: 250px;
+
+    margin-right: none!important;
+
+    overflow-x: hidden; 
+    overflow-x: auto; 
+}

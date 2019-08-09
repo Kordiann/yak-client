@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Input ,Button } from 'reactstrap';
 import Masonry from 'react-masonry-component';
 import { connect } from 'react-redux';
-import { getSendingProps, postSendingProps } from '../Helpers/SendingProps';
+import { getSendingProps } from '../Helpers/SendingProps';
 import { Redirect } from 'react-router-dom';
 import { pushSearchPhrase,
         setupMovieId } from '../redux/reducer';
 import { getMoviesByTitle, 
         getMovies,
-        saveMovie } from '../Helpers/API';
-
+        getMoviesByTitleWithUser } from '../Helpers/API';
+import SaveMovie from '../Buttons/SaveMovie';
 
 import './searchpage.css';
 
@@ -19,6 +19,8 @@ const masonryOptions = {
 
 const mapStateToProps = state => {
   return {
+    userID: state.userID,
+    isLogged: state.isLogged,
     userName: state.userName,
     phrase: state.phrase
   };
@@ -41,8 +43,6 @@ class SearchPage extends Component {
       name: this.props.userName,
       toRedirect: false,
     }
-
-    this.saveMe = this.saveMe.bind(this);
   }
 
   componentDidMount() {
@@ -66,9 +66,13 @@ class SearchPage extends Component {
     var URL = '';
 
     if(e == null) {
-      URL = getMovies(20);
+      URL = getMovies();
     } else {
-      URL = getMoviesByTitle(e);
+      if(this.props.isLogged) {
+        URL = getMoviesByTitleWithUser(e, this.props.userID);
+      } else {
+        URL = getMoviesByTitle(e);
+      }
     }
 
     fetch(URL, getSendingProps())
@@ -76,22 +80,11 @@ class SearchPage extends Component {
       .then(json => {
         this.setState({
           isLoaded: true,
-          results: json
+          results: json.smovies
         })
       });
   }
 
-  saveMe = (e, imdbID) => {
-    e.preventDefault();
-
-    var URL = saveMovie(imdbID, this.props.userName);
-
-    e.currentTarget.classList.add('hidden');
-
-    fetch(URL, postSendingProps())
-      .then()
-  }
-  
   render() {
 
     if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
@@ -99,7 +92,7 @@ class SearchPage extends Component {
     const searchResult = this.state.results.map((result) => { 
       return (
            <li key={result.imdbID}  className="image-element-class">
-            <div className="card">
+            <div className="card film_card">
                 <img className="card-img-top"
                     width="300px"
                     height="400px"
@@ -115,8 +108,8 @@ class SearchPage extends Component {
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item">Type: {result.type}</li>
                     <li className="list-group-item">Year: {result.year}</li>
-                    {this.props.userName != null ? ( <li className="list-group-item noliststyle">
-                      <button type="button " onClick={(e) => this.saveMe(e, result.imdbID)}  className="btn ">Save</button>
+                    { (!result.saved && this.props.isLogged) ? ( <li className="list-group-item noliststyle">
+                      <SaveMovie  movieIMDBID={result.imdbID} userID={this.props.userID} />
                     </li> ) : (null) }
                   </ul>
             </div> 

@@ -40,7 +40,9 @@ class UserPage extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchSearchingData();
+        if(this.props.isLogged) {
+            this.fetchSearchingData();
+        }
     }
 
     fetchSearchingData = (e) => {
@@ -100,8 +102,9 @@ class UserPage extends React.Component {
     render() {
         const { error, showMenu, email, isActivate, isActivationCodeSend } = this.state;
         const { password, _password } = this.state;
+        const { isLogged } = this.props;
 
-        if(this.props.isLogged) {
+        if(isLogged) {
             return (
             <div id='userpage' className='container'>
                 <div className='card'>

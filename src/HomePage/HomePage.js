@@ -37,6 +37,7 @@ class HomePage extends Component {
       name: this.props.userName,
 
       toRedirect: false,
+      isLoaded: true,
     }
   }
 
@@ -45,15 +46,21 @@ class HomePage extends Component {
   }
 
   fetchSearchingData = (e) => {
-    const URL = getHomeMovies();
+    const homeMoviesAPI = getHomeMovies();
 
-    fetch(URL, getSendingProps())
+    fetch(homeMoviesAPI, getSendingProps())
       .then(res => res.json())
       .then(json => {
-        this.setState({
-          isLoaded: true,
-          results: json
-        });
+        if(json.response === "200") {
+          this.setState({
+            isLoaded: true,
+            results: json.smovies
+          });
+        } else {
+          this.setState({
+            isLoaded: false,
+          });
+        }
     });
   }
 
@@ -67,7 +74,9 @@ class HomePage extends Component {
 
   render() {
 
-    if(this.state.toRedirect) return <Redirect to='/moviepage' push={true} />;
+    const { toRedirect, isLoaded } = this.state;
+
+    if(toRedirect) return <Redirect to='/moviepage' push={true} />;
 
     const newsResult = this.state.results.map((result, i) => { 
       i++;
@@ -88,6 +97,7 @@ class HomePage extends Component {
 
     return (
       <div id="homePage">
+        { isLoaded ? (null) : (alert("Failed to connect to server!")) }
         <div className="homepage_container">
           <section className="news_container">
             <div className="news">
@@ -105,7 +115,7 @@ class HomePage extends Component {
             onMouseEnter={showTitle}
             onMouseLeave={hideTitle}>
               <div className="posts_title opacity_v50">
-                <span>A new Naruto main</span>
+                <span>A new post</span>
               </div>
               <img src="b.jpg" alt='' />
             </div>

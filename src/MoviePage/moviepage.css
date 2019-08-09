@@ -79,3 +79,8 @@
 
     margin-left: 10px;
 }
+
+.saveButton {
+    position: relative;
+    margin: 0 145px;
+}

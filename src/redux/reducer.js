@@ -6,11 +6,13 @@ const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 const SET_USER_ID = 'SET_USER_ID';
 
+const SET_RECIPIENTID = 'SET_RECIPIENTID';
+
 const SET_USER_NAME = 'SET_USER_NAME';
 const SET_MOVIEID = 'SET_MOVIEID';
 
 const SET_IS_LOGGED = 'SET_IS_LOGGED';
-const API_URL_FIRST_PART = 'http://localhost:8080/users/authorize?userName=' ;
+const API_URL_FIRST_PART = 'https://yak-server.herokuapp.com/users/authorize?userName=' ;
 const API_URL_SECOND_PART = '&password=';
 
 export function login(login, password) {
@@ -55,10 +57,23 @@ export function setupMovieId(movieid) {
   }
 }
 
+export function setupRecipientID(recipientID) {
+  return dispatch => {
+    dispatch(setRecipientID(recipientID));
+  }
+}
+
 function setMovieId(movieid) {
   return {
     type: SET_MOVIEID,
     movieid
+  }
+}
+
+function setRecipientID(recipientID) {
+  return {
+    type: SET_RECIPIENTID,
+    recipientID
   }
 }
 
@@ -136,6 +151,8 @@ export default function reducer(state = {
   isLogged: false,
   userID: null,
 
+  recipientID: null,
+
   phrase: null,
   movieid: null,
 
@@ -179,6 +196,11 @@ export default function reducer(state = {
     case SET_MOVIEID:
       return Object.assign({}, state, {
         movieid: action.movieid
+    });
+
+    case SET_RECIPIENTID:
+      return Object.assign({}, state, {
+        recipientID: action.recipientID
     });
 
     default:

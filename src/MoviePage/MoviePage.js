@@ -4,13 +4,17 @@ import { setupMovieId } from '../redux/reducer';
 import { Redirect } from 'react-router-dom';
 import { getSendingProps } from '../Helpers/SendingProps'; 
 import { getMovieById,
-        getUserFriends } from '../Helpers/API';
+        getUserFriends,
+        getMovieByIdWithUser } from '../Helpers/API';
+import SaveMovie from '../Buttons/SaveMovie';
+
 
 import './moviepage.css';
 
 const mapStateToProps = state => {
   return {
     userID: state.userID,
+    userName: state.userName,
     movieid: state.movieid,
     isLogged: state.isLogged
   };
@@ -50,8 +54,6 @@ class MoviePage extends Component {
     friends.forEach(friend => {
       if(friend.SavedMovies !== null) {
         friend.SavedMovies.slice(0, 4).forEach(movie => {
-          console.log('movieValidate ' + movieValidate);
-
           if(movie.imdbID === movieValidate) {
             validatedFriends.push(friend);
           }
@@ -62,37 +64,45 @@ class MoviePage extends Component {
         });
       }
     });
-
-    console.log('validatedFriends ' + validatedFriends);
   }
 
   fetchSearchingData = (e) => {
     const movieid = this.props.movieid;
-    const Movies = getMovieById(movieid);
-    const Friends = getUserFriends(this.props.userID);
+    
+    if(this.props.isLogged) {
+      const MoviesAPI = getMovieByIdWithUser(movieid, this.props.userID);
 
-    fetch(Movies, getSendingProps())
+      fetch(MoviesAPI, getSendingProps())
       .then(res => res.json())
       .then(json => {
-        if(json.hasOwnProperty('status')) {
-          this.setState({
-            toRedirect: true,
-          });
-        } else {
           this.setState({
             isLoaded: true,
-            results: json,
+            results: json.smovies,
           });
-        } 
       });
+    } else {
+      const MoviesAPI = getMovieById(movieid);
+
+      fetch(MoviesAPI, getSendingProps())
+      .then(res => res.json())
+      .then(json => {
+          this.setState({
+            isLoaded: true,
+            results: json.smovies,
+          });
+      });
+    }
+    const Friends = getUserFriends(this.props.userID);
+
+    
 
     if(this.props.isLogged) {
       fetch(Friends, getSendingProps())
         .then(res => res.json())
         .then(json => {
-          console.log('json.friends ' + json.friends);
-          if(json.friends !== null) {
-            this.validateIfSaved(json.friends, movieid);
+          console.log(json);
+          if(json.users !== null) {
+            this.validateIfSaved(json.users, movieid);
           }
         });
     }
@@ -118,25 +128,45 @@ class MoviePage extends Component {
   }
 
   render() {
-    if (!this.state.toRedirect) {
-      return (
-        <div id="moviepage" className="movie">
-            <div className="card movie_card">
-                <span className='movie_card_span'>{this.state.results.title}</span>
-                <img className='movie_card_img' alt='' width='200px' height='300px' src={this.state.results.poster}/>
-                <ul className='movie_card_element'>
-                    <li>Type : {this.state.results.type}</li>
-                    <li>Year : {this.state.results.year}</li>
-                    <li>Plot : {this.state.results.plot}</li>
-                </ul>
-                <div className="friends">
-                  { this.showFriends() }
-                </div>
-            </div>
-        </div>
-      );
+    if (this.state.toRedirect)  return <Redirect to='/' />;
+
+    const { results } = this.state;
+    var result = results[0];
+
+    if(result !== undefined && results !== undefined) {
+
+      return (<div id="moviepage" className="movie">
+              <div className="card movie_card">
+                  <span className='movie_card_span'>{result.title}</span>
+                  <img className='movie_card_img' alt='' width='200px' height='300px' src={result.poster}/>
+                  <ul className='movie_card_element'>
+                      <li>Type : {result.type}</li>
+                      <li>Year : {result.year}</li>
+                      <li>Plot : {result.plot}</li>
+                  </ul>
+                  <div className="friends">
+                    { this.showFriends() }
+                  </div>
+                  { (!result.saved && this.props.isLogged) ? ( <div className="saveButton">
+                        <SaveMovie movieIMDBID={result.imdbID} userID={this.props.userID} />
+                      </div> ) : ( null ) }
+              </div>
+            </div>);
     } else {
-        return <Redirect to='/' />
+      return (<div id="moviepage" className="movie">
+              <div className="card movie_card">
+                  <span className='movie_card_span'></span>
+                  <img className='movie_card_img' alt='' width='200px' height='300px' src=''/>
+                  <ul className='movie_card_element'>
+                      <li>Type : </li>
+                      <li>Year : </li>
+                      <li>Plot : </li>
+                  </ul>
+                  <div className="friends">
+                    { this.showFriends() }
+                  </div>
+              </div>
+            </div>);
     }
   }
 }

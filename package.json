@@ -8,6 +8,7 @@
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "react": "^16.8.6",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-masonry-component": "^6.2.1",
     "react-moment": "^0.8.4",

@@ -82,11 +82,13 @@ export function userProfile(e, i) {
       const child = document.getElementById(i);
       child.classList.remove('display_none');
 
-    } else {
-      el.classList.remove('big_profile');
-      el.classList.add('profile');
+    } 
 
-      const child = document.getElementById(i);
-      child.classList.add('display_none');
-    }
-  }
+    // else {
+    //     el.classList.remove('big_profile');
+    //     el.classList.add('profile');
+  
+    //     const child = document.getElementById(i);
+    //     child.classList.add('display_none');
+    // }
+}

@@ -105,11 +105,16 @@
 }
 
 .friend {
-    border: 2px solid var(--light-green)!important;
+    border: 4px solid var()!important;
 }
 
 .friend_ask {
-    border: 2px solid var(--dark-blue)!important;
+    background-color: #01579b !important;
+    color: var(--bg-white)!important;
+}
+
+.friend_ask span {
+    color: var(--bg-white)!important;
 }
 
 .friend_req {

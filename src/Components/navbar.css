@@ -198,3 +198,9 @@ input[type=text] {
     text-decoration: none;
     color: var(--bg-white);
 }
+
+.login_ {
+    position: absolute;
+    top: 35px;
+    right: 20%;
+}

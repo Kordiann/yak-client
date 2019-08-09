@@ -1,0 +1,42 @@
+#messagesbox {
+    margin-left: 17px;
+
+    max-width: 90%;
+    width: 80%;
+    min-width: 570px;
+
+    height: 100%;
+}
+
+.message_input_container {
+  width: 100%;
+  height: 40px;
+
+  margin: 10px;
+}
+
+.message_input_container span {
+    margin: 5px;
+    margin-right: 20px;
+}
+
+.message_input {
+    max-width: 60%;
+    width: 50%;
+    min-width: 30%;
+
+    height: 40px;
+
+    padding-left: 20px;
+
+    border-radius: 5px;
+
+    border: 1px solid var(--dark-green);
+
+    margin: 5px auto;
+}
+
+.scrollbar_container {
+    width: 100%;
+    height: 90%;
+}

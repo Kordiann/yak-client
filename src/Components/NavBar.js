@@ -141,15 +141,15 @@ class NavBar extends Component {
                               (null)}
                       <Link onClick={this.resetInput} to='/search'><i className="fas fa-search"></i></Link>
                     </li>
-                    <Link to='/movies'><li className={
+                    {/* <Link to='/movies'><li className={
                             this.state.isFixed ?
                             ('last') :
                             ('last ' + this.state.translate_Z100)
-                            }><span className='nav_span'>Movie list</span></li> </Link>
+                            }><span className='nav_span'>Movie list</span></li> </Link> */}
                     <li>
                       {this.props.isLogged ?
                       (<Avatar />) :
-                      (<Link to='/login'><i className="fas fa-sign-in-alt"></i></Link>)}
+                      (<Link to='/login'><i className="login_ fas fa-sign-in-alt"></i></Link>)}
                     </li>
                 </ul>
               </div>    

@@ -2,6 +2,10 @@ label {
     font-size: xx-large;
 }
 
+#loginpage {
+    padding-bottom: 50px;
+}
+
 .form-group {
     width: 55%;
     margin: auto;
@@ -40,7 +44,6 @@ label {
 .registration_content {
     text-align: center;
     padding: 25px 10px;
-
 
     cursor: pointer;
     margin: auto;

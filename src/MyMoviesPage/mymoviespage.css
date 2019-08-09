@@ -10,4 +10,5 @@
 
 #mymoviespage {
     background-color: var(--dark-green);
+    min-height: 600px;
 }

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSendingProps } from '../Helpers/SendingProps';
-import { getUserFriends } from '../Helpers/API';
+import { getSendingProps,
+        postSendingProps,
+        deleteSendingProps } from '../Helpers/SendingProps';
+import { getUserFriends,
+        activateFriend,
+        deleteFriendReq } from '../Helpers/API';
 import { userProfile } from '../Helpers/Animations';
 import { setupMovieId } from '../redux/reducer';
 import { Redirect } from 'react-router-dom';
@@ -31,12 +35,18 @@ class UserProfile extends Component {
     this.state = {
         users: [],
         noFriend: true,
+
+        backHome: false,
     };
   }
 
   componentDidMount() {
     if(this.props.isLogged) {
       this.fetchUserFriends();
+    } else {
+      this.setState({
+        backHome: true,
+      });
     }
   }
 
@@ -46,13 +56,41 @@ class UserProfile extends Component {
     fetch(URL, getSendingProps())
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         if(json.response === "200") {
           this.setState({
             users: json.users,
             noFriend: false
           });
         } 
+      });
+  }
+
+  activate = (e, recipient) => {
+    e.preventDefault();
+
+    const activateReqAPI = activateFriend(recipient, this.props.userName);
+
+    fetch(activateReqAPI, postSendingProps())
+      .then(res => res.json())
+      .then(json => {
+        if(json.response === "200") {
+          this.fetchUserFriends();
+        }
+      });
+  }
+
+  deleteReq = (e, recipient) => {
+    e.preventDefault();
+
+    const deleteReqAPI = deleteFriendReq(this.props.userName, recipient);
+
+    fetch(deleteReqAPI, deleteSendingProps())
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        if(json.response === "200") {
+          this.fetchUserFriends();
+        }
       });
   }
 
@@ -66,9 +104,10 @@ class UserProfile extends Component {
 
   render() {
 
-    const { toRedirect } = this.state;
+    const { toRedirect, backHome } = this.state;
 
     if(toRedirect) return <Redirect to='/moviepage' push={true} />;   
+    if(backHome) return <Redirect to='/' push={true} />;   
 
     return (
         <div className="justify">
@@ -77,7 +116,7 @@ class UserProfile extends Component {
                   (this.state.users.map((user, i) => { 
                     return (
                         <div key={user.userName}
-                         className='card profile'
+                         className={user.friend ? ('card profile friend') : ('card profile friend_ask')}
                          onClick={e => userProfile(e, i)}>
                             <div className='avatar'>
                                 <img width='80px'alt='' height='80px' src='lol.png'/>
@@ -86,10 +125,10 @@ class UserProfile extends Component {
 
                             <div id={i} className='user_details display_none'>
                               {user.recipient ? (<div className='btn req_btn'
-                              onClick={e => this.pushFriendRequest(e, user.userName)}>Delete Friend Request</div>) :
+                              onClick={e => this.deleteReq(e, user.userName)}>Delete Friend Request</div>) :
                                 (null)}
                               {user.sender ? (<div className='btn req_btn'
-                              onClick={e => this.pushFriendRequest(e, user.userName)}>Accept Friend Request</div>) :
+                              onClick={e => this.activate(e, user.userName)}>Accept Friend Request</div>) :
                                 (null)}
                               <span className='font'>Saved movies</span>
                               <div className='usermovies'>

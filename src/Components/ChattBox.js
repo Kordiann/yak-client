@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import { Card ,Input ,Button} from 'reactstrap';
 
+import './chattbox.css';
+
 class ChattBox extends Component {
 
   constructor(props) {
@@ -36,45 +38,36 @@ class ChattBox extends Component {
   }
 
   render() {
+    var { items } = this.state;
+    
+    return (
+      <div className="chattbox">
 
-    var { isLoaded, items } = this.state;
-
-    if(!isLoaded) {
-      return (
-        <div>
-          Loading...
-        </div>
-      );
-    }
-
-    else {
-      return (
-        <div className="App">
-
-          <Card className="card">
-            <ul className="chatt_content">
-              {items.map((item) => (
+        <Card className="card chatt_card">
+          <i className="exit_chatt fas fa-times"></i>
+          <ul className="chatt_content">
+            {items.map((item) => (
                 
-                  <li key={item.id}>
-                    {item.content}  <Moment format = "HH:mm" {...item.sentData} />
-                  </li>
+              <li key={item.id}>
+                { item.content }  <Moment format = "HH:mm" {...item.sentData} />
+              </li>
                 
-              ))}
-            </ul>
+            ))}
+          </ul>
 
-            <div class="input-group">
-                <Input type="message" name="message" id="content" placeholder="Lets talk about..." />
-                <span class="input-group-btn">
-                  <Button className="btn-success">Send</Button>
-                </span>
-                </div>
+          <div className="input-group">
+              <Input type="message" name="message" id="content" placeholder="Lets talk about..." />
+              <span className="input-group-btn">
+                <Button className="btn-success"><i className="fas fa-comment"></i></Button>
+              </span>
+              </div>
 
-          </Card>
+        </Card>
 
-        </div>
+      </div>
       );
-    }
   }
+  
 }
 
 export default ChattBox;

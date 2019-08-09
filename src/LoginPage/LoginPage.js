@@ -32,7 +32,7 @@ class LoginPage extends Component {
     }
 
     return (
-      <div className="form container flex-container">
+      <div id='loginpage' className="form container flex-container">
         <div className="form card login">
           <div className="content">
             <label>Sign in</label>
